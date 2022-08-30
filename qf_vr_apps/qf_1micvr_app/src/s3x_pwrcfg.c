@@ -285,7 +285,7 @@ S3x_Policy_Node dfs_node[]  = {
 #if (DSPC_AW == 1)
         .rate = {FREQ_3MHZ, FREQ_3MHZ, FREQ_48MHZ, FREQ_256KHZ},
 #else
-        .rate = {FREQ_3MHZ, FREQ_3MHZ, FREQ_24MHZ, FREQ_256KHZ},
+        .rate = {FREQ_3MHZ, FREQ_3MHZ, /*FREQ_24MHZ*/FREQ_72MHZ, FREQ_256KHZ}, // Rami FREQ_36MHZ -> FREQ_72MHZ
 #endif
         .step_width =  50,/* msec */
         .cpuload_downthreshold = 10,
@@ -297,7 +297,7 @@ S3x_Policy_Node dfs_node[]  = {
 #if (DSPC_AW == 1)
         .rate = {FREQ_6MHZ, FREQ_3MHZ, FREQ_60MHZ, FREQ_256KHZ},
 #else
-        .rate = {FREQ_6MHZ, FREQ_3MHZ, FREQ_36MHZ, FREQ_256KHZ},        
+        .rate = {FREQ_6MHZ, FREQ_3MHZ, FREQ_72MHZ, FREQ_256KHZ}, // Rami FREQ_36MHZ -> FREQ_72MHZ
 #endif        
         .step_width = 100,/* msec */
         .cpuload_downthreshold = 60,
@@ -309,7 +309,7 @@ S3x_Policy_Node dfs_node[]  = {
 #if (DSPC_AW == 1)
         .rate = {FREQ_6MHZ, FREQ_3MHZ, FREQ_72MHZ, FREQ_256KHZ},
 #else
-        .rate = {FREQ_6MHZ, FREQ_3MHZ, FREQ_48MHZ, FREQ_256KHZ},
+        .rate = {FREQ_6MHZ, FREQ_3MHZ, /*FREQ_48MHZ*/FREQ_72MHZ, FREQ_256KHZ}, // Rami FREQ_36MHZ -> FREQ_72MHZ
 #endif
         .step_width = 100,/* msec */
         .cpuload_downthreshold = 65,

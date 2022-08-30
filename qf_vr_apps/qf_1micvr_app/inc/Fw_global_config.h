@@ -104,7 +104,7 @@ extern int FPGA_FFE_LOADED;
 #define FFE_DRIVERS	0 // 1
 
 /* do or do not perform dynamic frequency scaling */
-#define CONST_FREQ (0)
+#define CONST_FREQ (/*0*/1)
 /* used to enable CPU load calculation for DFS */
 #define CPU_LOAD_CALC_ENABLE 0
 
@@ -187,8 +187,8 @@ extern int FPGA_FFE_LOADED;
 
 /* Fs = Audio sampling rate */
 #define AUDIO_SAMPLING_RATE             (16000)
-#define AUDIO_BLOCK_SIZE_IN_SAMPLES     (240)
-#define AUDIO_BLOCK_SIZE_IN_MS          (15)
+#define AUDIO_BLOCK_SIZE_IN_SAMPLES     (/*240*/256)
+#define AUDIO_BLOCK_SIZE_IN_MS          (/*15*/16)
 #if QL_XPORT_INCLUDE_HEADER == 1
 #define QL_XPORT_BLCOK_HDR_SZ           (8)
 #else

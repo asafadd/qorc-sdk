@@ -15,11 +15,12 @@
  *==========================================================*/
 
 #include "vr_engine_api.h"
-
+#include "leds.h"
 // These 3 APIs need to be provided by every VR engine
 __attribute__((weak)) void vr_engine_init(void)
 {
   // initialize the VR engine
+	RBD_TRIGGER_CREATE();
   dbg_str("vr_engine_init: Using a STUB VR engine API, replace with desired VR engine");
   return;
 }
@@ -27,11 +28,43 @@ __attribute__((weak)) void vr_engine_init(void)
 __attribute__((weak)) int vr_engine_get_samples_per_frame(void)
 {
   // return samples per frame size used by the VR engine
-  return 240; // default samples per frame size
+  return 256; // default samples per frame size - 256 for Rubidium
 }
 
 __attribute__((weak)) int vr_engine_process(short *samples)
 {
   // process input samples and return if wakeword is detected
-  return 0; // 0 = no wakeword detected, 1 = wakeword detected
+	int recognition_flag;
+	recognition_flag = RBD_PROCESS(samples, 256);
+	if (recognition_flag)
+	{
+		dbg_str_int("",recognition_flag);
+	}
+
+	 switch (recognition_flag)
+	 	{
+	 		case 3:  // One
+	 			LedBlueOff();
+	 			LedGreenOff();
+	 			LedOrangeOn();
+	 			break;
+
+	 		case 4: // Two
+	 			LedBlueOff();
+	 			LedGreenOn();
+	 			LedOrangeOff();
+	 			break;
+
+	 		case 7: // Five
+	 			LedBlueOn();
+	 			LedGreenOff();
+	 			LedOrangeOff();
+	 			break;
+
+	 		default:
+	 			break;
+	 	} //switch (cmd_num)
+
+
+	 return (0); // 0 = no wakeword detected
 }

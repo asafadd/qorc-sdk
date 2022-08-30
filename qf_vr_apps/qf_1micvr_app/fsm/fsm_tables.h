@@ -5,35 +5,27 @@
 #if KPROCESS < 7
 #error KPROCESS < 7
 #endif
-#if KSTATES < 13
-#error KSTATES < 13
+#if KSTATES < 9
+#error KSTATES < 9
 #endif
 #define KPROCESSACTUAL 7
-#define KSTATESACTUAL 13
+#define KSTATESACTUAL 9
 
 //                                                      DFS                  VR                   AudioHW              PTT_Switch           Mute_Switch          LPSD                 CircularBuffer      
 struct GSMrow afsmrow[KSTATES] = {
 
   {true,  "WAIT_ON_KWD"       , 0                     ,{ PSTATE_NODE4        ,PSTATE_STARTED      ,PSTATE_STREAMING    ,PSTATE_DONT_CARE    ,PSTATE_DONT_CARE    ,PSTATE_DONT_CARE    ,PSTATE_SAVING       ,},
                                                        { 0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,}},
-  {false, ""                  , CEVENT_VR_TRIGGER     ,{ 0                   ,0                   ,0                   ,0                   ,0                   ,PSTATE_LPSD_ON      ,0                   ,},
-                                                       { PACTION_MIN_NODE4   ,PACTION_START       ,PACTION_START_STREAMING,0                   ,0                   ,PACTION_START_ON    ,0                   ,}},
-  {false, ""                  , CEVENT_VR_TRIGGER     ,{ 0                   ,0                   ,0                   ,0                   ,0                   ,PSTATE_LPSD_OFF     ,0                   ,},
-                                                       { PACTION_MIN_NODE3   ,PACTION_STOP        ,PACTION_START_SAVING,0                   ,0                   ,PACTION_START_OFF   ,0                   ,}},
   {false, ""                  , CEVENT_LPSD_OFF       ,{ 0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,},
-                                                       { PACTION_MIN_NODE3   ,PACTION_STOP        ,PACTION_START_SAVING,0                   ,0                   ,PACTION_START_OFF   ,0                   ,}},
+                                                       { 0                   ,0                   ,0                   ,0                   ,0                   ,PACTION_START_OFF   ,0                   ,}},
   {false, ""                  , CEVENT_LPSD_ON        ,{ 0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,},
-                                                       { 0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,}},
-  {true,  "WAIT_ON_LPSD"      , 0                     ,{ PSTATE_NODE3        ,PSTATE_STOPPED      ,PSTATE_SAVING       ,PSTATE_DONT_CARE    ,PSTATE_DONT_CARE    ,PSTATE_DONT_CARE    ,PSTATE_SAVING       ,},
-                                                       { 0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,}},
-  {false, ""                  , CEVENT_LPSD_ON        ,{ 0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,},
-                                                       { PACTION_MIN_NODE4   ,PACTION_START       ,PACTION_START_STREAMING,0                   ,0                   ,PACTION_START_ON    ,0                   ,}},
-  {false, ""                  , CEVENT_LPSD_OFF       ,{ 0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,},
-                                                       { PACTION_MIN_NODE3   ,PACTION_STOP        ,PACTION_START_SAVING,0                   ,0                   ,PACTION_START_OFF   ,0                   ,}},
+                                                       { 0                   ,0                   ,0                   ,0                   ,0                   ,PACTION_START_ON    ,0                   ,}},
+  {false, ""                  , CEVENT_VR_TRIGGER     ,{ 0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,},
+                                                       { 0                   ,0                   ,0                   ,0                   ,0                   ,PACTION_START_ON    ,0                   ,}},
   {true,  "CONFIGURED"        , 0                     ,{ PSTATE_DONT_CARE    ,PSTATE_STOPPED      ,PSTATE_STOPPED      ,PSTATE_DONT_CARE    ,PSTATE_DONT_CARE    ,PSTATE_STOPPED      ,PSTATE_STOPPED      ,},
                                                        { 0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,}},
   {false, ""                  , CEVENT_START          ,{ 0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,},
-                                                       { PACTION_MIN_NODE3   ,0                   ,PACTION_START_SAVING,0                   ,0                   ,PACTION_START_OFF   ,PACTION_START_SAVING,}},
+                                                       { PACTION_MIN_NODE4   ,PACTION_START       ,PACTION_START_STREAMING,0                   ,0                   ,PACTION_START_OFF   ,PACTION_START_SAVING,}},
   {true,  "INITIAL"           , 0                     ,{ PSTATE_UNCONFIG     ,PSTATE_UNCONFIG     ,PSTATE_UNCONFIG     ,PSTATE_UNCONFIG     ,PSTATE_UNCONFIG     ,PSTATE_UNCONFIG     ,PSTATE_UNCONFIG     ,},
                                                        { 0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,}},
   {false, ""                  , CEVENT_CONFIG         ,{ 0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,0                   ,},
@@ -90,7 +82,6 @@ char* apsFromFSMS[] = {
 	"NULL",
 	"INITIAL",
 	"CONFIGURED",
-	"WAIT_ON_LPSD",
 	"WAIT_ON_KWD",
 };
 

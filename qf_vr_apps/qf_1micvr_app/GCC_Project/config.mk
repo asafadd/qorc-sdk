@@ -168,7 +168,7 @@ $(info PROJ_NAME = ${PROJ_NAME})
 export OUTPUT_FILE=${PROJ_NAME}
 
 #Libraries to include
-export LIBS=
+export LIBS=../../../Libraries/rbdlib_float/GCC_Project/output/bin/rbdlib_float.a
 
 ifeq ($(TOOLCHAIN),IAR)
 $(info Building using $(TOOLCHAIN) Toolchain)

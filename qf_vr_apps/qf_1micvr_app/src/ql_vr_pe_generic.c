@@ -25,12 +25,13 @@
 #include "ql_audio.h"
 #include "string.h"
 #include "vr_engine_api.h"
+#include "leds.h"
 
 int ww_detected = 0;
 int ww_size = 0;
 int ww_confidence = 0;
 char ww_keyword[20] = { 0 };
-static int vr_engine_samples_per_frame = 240;
+static int vr_engine_samples_per_frame = /*240*/256;
 //********************************
 // QuickLogic wrapper code
 
@@ -99,8 +100,8 @@ void datablk_pe_config_ql_vr(void *p_pe_object)
   return ;
 }
 
-static int16_t a_audio_brick[240];
-static int16_t a_last_buff_tail[240];
+static int16_t a_audio_brick[/*240*/256];
+static int16_t a_last_buff_tail[/*240*/256];
 static uint32_t p_last_buff_tail_sz = 0;
 //void vr_rdsp_clear_static_mem()
 void vr_clear_static_mem()
@@ -153,22 +154,27 @@ void datablk_pe_process_ql_vr(QAI_DataBlock_t *pIn, QAI_DataBlock_t *pOut, QAI_D
      uint32_t ksamplesNew = pIn->dbHeader.numDataElements/pIn->dbHeader.numDataChannels;
      while(1)
      {
-         uint32_t balance_samples = vr_frame_sz_adapter((uint16_t*)pIn->p_data, ksamplesNew, &a_audio_brick[0], vr_engine_samples_per_frame);
+        uint32_t balance_samples = vr_frame_sz_adapter((uint16_t*)pIn->p_data, ksamplesNew, &a_audio_brick[0], vr_engine_samples_per_frame);
          
          ret = vr_engine_process((short*)&a_audio_brick[0]);
         
-         if ( ret ==  e_ql_vr_status_detection_ok) {
+//       if ( ret ==  e_ql_vr_status_detection_ok)
+         if ( ret !=  0) // recognition = True
+   	   	 {
            vr_clear_static_mem();
            disable_stream_VR(); //disable VR automatically
            ql_vr_event_data.startFramesBack = ww_size; // a frame is a sample ?
            ql_vr_event_data.score = ww_confidence;
            ql_vr_event_data.p_phrase_text = ww_keyword;   // phrase text
            ql_vr_event_data.len_phrase_text = strlen(ww_keyword);
-           if (p_event_notifier) {
+           if (p_event_notifier)
+           {
               (*p_event_notifier)(AUDIO_QL_VR_PID, 0, &ql_vr_event_data, sizeof(ql_vr_event_data));
            }
            break; //do not process any more
-         } else if (ret != 0) {
+         }
+         else if (ret != 0)
+         {
            dbg_str_int("ql_vr_process ret ", ret);
          }
 
@@ -181,6 +187,7 @@ void datablk_pe_process_ql_vr(QAI_DataBlock_t *pIn, QAI_DataBlock_t *pOut, QAI_D
            ksamplesNew = 0;
          }
      }
+
        
      return ;
 }

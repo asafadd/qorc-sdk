@@ -82,7 +82,7 @@ extern void set_VR_status(uint8_t enable_flag);
   7. the vr, takes pBuffInfo from the top of the Q and hence get the latest output from pre-proc
 
 */
-#define NUM_AUDIO_BRICKS (120)
+#define NUM_AUDIO_BRICKS (/*120*/100)
 #if QL_XPORT_INCLUDE_HEADER == 0
 #define AUDIO_BRICK_SIZE_SAMPLES (AUDIO_BLOCK_SIZE_IN_SAMPLES)
 #else
@@ -90,7 +90,7 @@ extern void set_VR_status(uint8_t enable_flag);
 #endif
 #define AUDIO_BRICK_TIME_MSEC (15)
 
-#define THREAD_1_Q_SIZE   (120)
+#define THREAD_1_Q_SIZE   (/*120*/100)
 #define THREAD_1_PRIORITY ((unsigned)(PRIORITY_NORMAL))
 #define THREAD_1_STACK_DEPTH (3*256) // 3K bytes
 
