@@ -49,7 +49,7 @@
 #elif   PDM2DEC_FACT==48
 
 #define  PDM2PCM_PGA_SYNC_RATE          (48)
-#define  PDM2PCM_PGA_GAIN_VAL           (8)
+#define  PDM2PCM_PGA_GAIN_VAL           (12)
 #define  PDM2PCM_MCLKDIV_VAL            (1)
 #define  PDM2PCM_CLK_C30                (HSOSC_3MHZ)
 #define  PDM2PCM_CLK_C31                (HSOSC_768KHZ)
