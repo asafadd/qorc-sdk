@@ -24,5 +24,4 @@
 	url = https://github.com/QuickLogic-Corp/quicklogic-fpga-toolchain
 [submodule "Libraries/rbdlib_float"]
 	path = Libraries/rbdlib_float
-	url = git@gitlab.rubidium.local:rnd/fw/rbdlib_float.git
-	branch = Titan_ql
+	url = https://github.com/asafadd/rubi_lib_ql.git
